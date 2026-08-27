@@ -1,0 +1,48 @@
+# Pi coding agent kit — DeepSeek only, based on the working pattern
+# from shaftoe/sbx-template-pi (schemaVersion 1, no credential binding needed)
+
+schemaVersion: "1"
+kind: agent
+name: pi-deepseek
+displayName: Pi (DeepSeek)
+description: Pi coding agent wired to DeepSeek via a proxy-managed API key.
+
+agent:
+  image: docker/sandbox-templates:shell-docker
+  aiFilename: AGENTS.md
+  entrypoint:
+    run: [pi]
+
+network:
+  serviceDomains:
+    api.deepseek.com: deepseek
+  serviceAuth:
+    deepseek:
+      headerName: Authorization
+      valueFormat: "Bearer %s"
+  allowedDomains:
+    - registry.npmjs.org
+    - api.deepseek.com:443
+    - pi.dev:443
+    - "*.pi.dev:443"
+
+credentials:
+  sources:
+    deepseek:
+      env:
+        - DEEPSEEK_API_KEY
+
+environment:
+  proxyManaged:
+    - DEEPSEEK_API_KEY
+
+commands:
+  install:
+    - command: "npm install -g @earendil-works/pi-coding-agent"
+      user: "1000"
+      description: "Install Pi coding agent"
+
+memory: |
+  ## Sandbox environment
+  You are running inside a Docker sandbox (microVM). DeepSeek is your model
+  provider — select it via `/model` if it's not already active.
