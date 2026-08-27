@@ -28,7 +28,7 @@ sbx settings set kit.allowedSources '["docker.io/","github.com/nilevforce/"]'
 ### 3. Запусти
 
 ```bash
-sbx run --kit "git+https://github.com/nilevforce/sbx-kit-pi-deepseek.git" pi-deepseek
+sbx run --kit "git+https://github.com/nilevforce/sbx-kits.git#dir=pi/deepseek" pi-deepseek
 ```
 
 Первый запуск установит Pi через npm внутри sandbox — займёт чуть больше времени. Дальше сразу попадёшь в терминальный интерфейс Pi.
